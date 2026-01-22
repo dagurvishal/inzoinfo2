@@ -1,5 +1,6 @@
 "use client";
 
+export const dynamic = "force-dynamic";
 import { useEffect, useMemo, useState } from "react";
 import TopBar from "../components/TopBar";
 import BottomTabs from "../components/BottomTabs";
