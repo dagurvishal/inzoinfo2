@@ -2,37 +2,48 @@
 
 export default function TopBar({ query, setQuery }) {
   return (
-    <div className="card" style={{ padding: 12 }}>
-      <div className="rowBetween">
-        <div className="row" style={{ gap: 10 }}>
-          <img
-            src="/icon.png"
-            alt="INZO"
+    <div className="card" style={{ padding: 14 }}>
+      {/* Center Logo */}
+      <div style={{ textAlign: "center" }}>
+        <div
+          style={{
+            fontSize: 22,
+            fontWeight: 1000,
+            letterSpacing: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 10
+          }}
+        >
+          <span
             style={{
-              width: 38,
-              height: 38,
+              width: 36,
+              height: 36,
               borderRadius: 12,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "rgba(125, 95, 255, 0.22)",
               border: "1px solid rgba(255,255,255,0.14)"
             }}
-          />
-          <div>
-            <div style={{ fontWeight: 900, fontSize: 16 }}>INZO INFO</div>
-            <div className="muted" style={{ fontSize: 12 }}>
-              Search • Watch Trailer • Download
-            </div>
-          </div>
+          >
+            🎬
+          </span>
+          <span>INZO INFO</span>
         </div>
 
-        <a href="/admin" className="btn btnPrimary">
-          Admin
-        </a>
+        <div className="muted" style={{ fontSize: 12, marginTop: 4 }}>
+          Search • Watch Trailer • Download
+        </div>
       </div>
 
-      <div style={{ height: 10 }} />
+      <div style={{ height: 12 }} />
 
+      {/* Full width search */}
       <input
         className="input"
-        placeholder="Search movies (example: pathan / patan)..."
+        placeholder="Search movies (example: pathaan / patan)..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
