@@ -6,8 +6,8 @@ import BottomTabs from "./components/BottomTabs";
 import MovieCard from "./components/MovieCard";
 import MovieModal from "./components/MovieModal";
 import RequestModal from "./components/RequestModal";
-import { supabase } from "../Lib/supabaseClient";
-import { fuzzyIncludes } from "../Lib/fuzzySearch";
+import { supabase } from "./Lib/supabaseClient";
+import { fuzzyIncludes } from "./Lib/fuzzySearch";
 
 export default function HomePage() {
   const [tab, setTab] = useState("home"); // home | trending | request
