@@ -10,7 +10,7 @@ function getYouTubeEmbed(url) {
     const u = new URL(url);
     if (u.hostname.includes("youtu.be")) {
       const id = u.pathname.replace("/", "");
-      return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1`;
+      return `https://www.youtube.com/embed/${id}?autoplay=1&amp;mute=1`;
     }
     if (u.hostname.includes("youtube.com")) {
       const id = u.searchParams.get("v");
