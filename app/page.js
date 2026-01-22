@@ -1,14 +1,13 @@
 "use client";
 
-export const dynamic = "force-dynamic";
 import { useEffect, useMemo, useState } from "react";
-import TopBar from "../components/TopBar";
-import BottomTabs from "../components/BottomTabs";
-import MovieCard from "../components/MovieCard";
-import MovieModal from "../components/MovieModal";
-import RequestModal from "../components/RequestModal";
-import { supabase } from "../Lib/supabaseClient";
-import { fuzzyIncludes } from "../Lib/fuzzySearch";
+import TopBar from "./components/TopBar";
+import BottomTabs from "./components/BottomTabs";
+import MovieCard from "./components/MovieCard";
+import MovieModal from "./components/MovieModal";
+import RequestModal from "./components/RequestModal";
+import { supabase } from "./Lib/supabaseClient";
+import { fuzzyIncludes } from "./Lib/fuzzySearch";
 
 export default function HomePage() {
   const [tab, setTab] = useState("home"); // home | trending | request
@@ -56,35 +55,24 @@ export default function HomePage() {
   return (
     <>
       <div className="container">
+        {/* Top Logo + Search */}
         <TopBar query={query} setQuery={setQuery} />
 
-        <div className="rowBetween" style={{ marginTop: 12 }}>
-          <div className="badge">
-            <span>⚡</span>
-            <span>
-              {loading ? "Loading..." : `${movies.length} Movies`}
-            </span>
-          </div>
+        <div style={{ height: 16 }} />
 
-          <div className="badge">
-            <span>🟣</span>
-            <span>Poster Upload Enabled</span>
-          </div>
-        </div>
-
-        <div className="hr" />
-
+        {/* Content */}
         {tab === "home" && (
           <>
             <div className="rowBetween">
               <div>
-                <div style={{ fontSize: 18, fontWeight: 900 }}>
-                  Browse Movies
+                <div style={{ fontSize: 20, fontWeight: 1000 }}>
+                  Movies
                 </div>
                 <div className="muted" style={{ fontSize: 13 }}>
                   Tap any card to open details & download.
                 </div>
               </div>
+
               <button className="btn" onClick={loadMovies}>
                 🔄 Refresh
               </button>
@@ -96,7 +84,7 @@ export default function HomePage() {
               <div className="muted">Loading movies from Supabase...</div>
             ) : filtered.length === 0 ? (
               <div className="card" style={{ padding: 14 }}>
-                <div style={{ fontWeight: 900 }}>No movies found</div>
+                <div style={{ fontWeight: 1000 }}>No movies found</div>
                 <div className="muted" style={{ marginTop: 6 }}>
                   Try a different search keyword.
                 </div>
@@ -104,7 +92,11 @@ export default function HomePage() {
             ) : (
               <div className="grid">
                 {filtered.map((m) => (
-                  <MovieCard key={m.id} movie={m} onOpen={() => setActiveMovie(m)} />
+                  <MovieCard
+                    key={m.id}
+                    movie={m}
+                    onOpen={() => setActiveMovie(m)}
+                  />
                 ))}
               </div>
             )}
@@ -115,27 +107,52 @@ export default function HomePage() {
           <>
             <div className="rowBetween">
               <div>
-                <div style={{ fontSize: 18, fontWeight: 900 }}>
-                  Trending (Latest)
+                <div style={{ fontSize: 20, fontWeight: 1000 }}>
+                  Adult (Latest)
                 </div>
                 <div className="muted" style={{ fontSize: 13 }}>
                   Latest uploaded movies show here.
                 </div>
               </div>
-              <div className="kbd">Latest</div>
+
+              <div
+                className="badge"
+                style={{
+                  fontWeight: 900,
+                  padding: "8px 12px"
+                }}
+              >
+                Latest
+              </div>
             </div>
 
             <div style={{ height: 12 }} />
 
-            <div className="grid">
-              {trendingLatest.map((m) => (
-                <MovieCard key={m.id} movie={m} onOpen={() => setActiveMovie(m)} />
-              ))}
-            </div>
+            {loading ? (
+              <div className="muted">Loading...</div>
+            ) : trendingLatest.length === 0 ? (
+              <div className="card" style={{ padding: 14 }}>
+                <div style={{ fontWeight: 1000 }}>No movies yet</div>
+                <div className="muted" style={{ marginTop: 6 }}>
+                  Add movies from Admin panel.
+                </div>
+              </div>
+            ) : (
+              <div className="grid">
+                {trendingLatest.map((m) => (
+                  <MovieCard
+                    key={m.id}
+                    movie={m}
+                    onOpen={() => setActiveMovie(m)}
+                  />
+                ))}
+              </div>
+            )}
           </>
         )}
       </div>
 
+      {/* Bottom Tabs */}
       <BottomTabs
         tab={tab}
         setTab={(t) => {
@@ -144,11 +161,10 @@ export default function HomePage() {
         }}
       />
 
-      <MovieModal
-        movie={activeMovie}
-        onClose={() => setActiveMovie(null)}
-      />
+      {/* Movie Modal */}
+      <MovieModal movie={activeMovie} onClose={() => setActiveMovie(null)} />
 
+      {/* Request Modal */}
       <RequestModal
         open={requestOpen}
         onClose={() => {
